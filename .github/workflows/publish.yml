@@ -1,10 +1,9 @@
 name: Publish to Maven Central
 
-# Se dispara cuando haces push a un tag
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    types: [created]
+  workflow_dispatch:
 
 jobs:
   publish:
