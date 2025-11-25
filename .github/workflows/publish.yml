@@ -1,0 +1,48 @@
+name: Publish to Maven Central
+
+# Se dispara cuando haces push a un tag
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+
+      - name: Import GPG key
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+        run: |
+          echo "$SIGNING_KEY" | gpg --batch --import
+
+
+      - name: Publish to Maven Central
+        env:
+          # Sonatype token
+          SONATYPE_TOKEN: ${{ secrets.SONATYPE_TOKEN }}
+
+          # Firma PGP
+          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+        run: ./gradlew publish
+
