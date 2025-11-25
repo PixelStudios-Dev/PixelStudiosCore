@@ -28,6 +28,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
 }
 
 processResources {
@@ -119,7 +120,7 @@ nmcp {
     publishAllPublications {
         username = System.getenv("SONATYPE_USERNAME") ?: "token"
         password = System.getenv("SONATYPE_TOKEN")
-        publicationType = "USER_MANAGED"
+        publicationType = "AUTOMATIC"
     }
 
 }

@@ -11,13 +11,13 @@
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
-      "io.pixelstudiospixelstudioscore.client.PixelstudioscoreDataGenerator"
+      "io.pixelstudios.pixelstudioscore.client.PixelstudioscoreDataGenerator"
     ],
     "client": [
-      "io.pixelstudiospixelstudioscore.client.PixelstudioscoreClient"
+      "io.pixelstudios.pixelstudioscore.client.PixelstudioscoreClient"
     ],
     "main": [
-      "io.pixelstudiospixelstudioscore.Pixelstudioscore"
+      "io.pixelstudios.pixelstudioscore.Pixelstudioscore"
     ]
   },
   "mixins": [

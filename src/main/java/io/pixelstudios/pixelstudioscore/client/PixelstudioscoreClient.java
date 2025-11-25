@@ -1,4 +1,4 @@
-package io.pixelstudiospixelstudioscore.client;
+package io.pixelstudios.pixelstudioscore.client;
 
 import net.fabricmc.api.ClientModInitializer;
 

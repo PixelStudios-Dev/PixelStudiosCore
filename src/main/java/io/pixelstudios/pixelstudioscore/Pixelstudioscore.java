@@ -1,4 +1,4 @@
-package io.pixelstudiospixelstudioscore;
+package io.pixelstudios.pixelstudioscore;
 
 import net.fabricmc.api.ModInitializer;
 
@@ -6,5 +6,7 @@ public class Pixelstudioscore implements ModInitializer {
 
     @Override
     public void onInitialize() {
+
     }
+
 }
