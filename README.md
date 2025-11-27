@@ -1,4 +1,4 @@
-# Pixel Studios Core [![Maven Central](https://img.shields.io/maven-central/v/io.github.pixelstudios-dev/PixelStudiosCore.svg?color=orange)](https://search.maven.org/artifact/io.github.pixelstudios-dev/PixelStudiosCore)
+# Pixel Studios Core [![Maven Central](https://img.shields.io/maven-central/v/io.github.pixelstudios-dev/PixelStudiosCore.svg?color=orange)](https://central.sonatype.com/artifact/io.github.pixelstudios-dev/PixelStudiosCore)
 
 Una libreria de utilidades para Fabric, orientada a la versión de Minecraft 1.21.1.
 
@@ -30,7 +30,7 @@ Si en cambio prefieres maven, debes añadir lo siguiente a tu `pom.xml`:
 
 Si usas cualquier otro build system, puedes encontrar su correspondiente snippet en la [Maven Central](https://central.sonatype.com/artifact/io.github.pixelstudios-dev/PixelStudiosCore)
 
-*Puedes encontrar la última version en la pestaña [releases]([https://github.com/Ladysnake/Satin/releases](https://github.com/PixelStudios-Dev/PixelStudiosCore/releases))*
+Puedes encontrar la última version en la pestaña [releases]([https://github.com/Ladysnake/Satin/releases](https://github.com/PixelStudios-Dev/PixelStudiosCore/releases))
 
 ## Usando la libreria
 
