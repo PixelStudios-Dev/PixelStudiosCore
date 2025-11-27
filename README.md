@@ -30,7 +30,7 @@ Si en cambio prefieres maven, debes añadir lo siguiente a tu `pom.xml`:
 
 Si usas cualquier otro build system, puedes encontrar su correspondiente snippet en la [Maven Central](https://central.sonatype.com/artifact/io.github.pixelstudios-dev/PixelStudiosCore)
 
-Puedes encontrar la última version en la pestaña [releases]([https://github.com/Ladysnake/Satin/releases](https://github.com/PixelStudios-Dev/PixelStudiosCore/releases))
+*Puedes encontrar la última version en la pestaña [releases](https://github.com/PixelStudios-Dev/PixelStudiosCore/releases)*
 
 ## Usando la libreria
 
