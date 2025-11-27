@@ -1,4 +1,4 @@
-# Pixel Studios Core [![Maven Central](https://img.shields.io/maven-central/v/io.github.pixelstudios-dev/PixelStudiosCore.svg?color=orange)](https://central.sonatype.com/artifact/io.github.pixelstudios-dev/PixelStudiosCore)
+# Pixel Studios Core [![Maven Central](https://img.shields.io/maven-central/v/io.github.pixelstudios-dev/PixelStudiosCore.svg?color=orange)](https://central.sonatype.com/artifact/io.github.pixelstudios-dev/PixelStudiosCore) [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/PixelStudios-Dev/PixelStudiosCore)
 
 Una libreria de utilidades para Fabric, orientada a la versión de Minecraft 1.21.1.
 
