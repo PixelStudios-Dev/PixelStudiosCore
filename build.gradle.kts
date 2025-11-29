@@ -106,17 +106,11 @@ publishing {
         create<MavenPublication>("mavenJava") {
             artifactId = project.property("archives_base_name") as String
 
+            from(components["java"])
+
+            artifacts.removeIf { it.classifier == null || it.classifier == "" }
             artifact(tasks.remapJar) {
                 builtBy(tasks.remapJar)
-            }
-            artifact(tasks.remapSourcesJar) {
-                builtBy(tasks.remapSourcesJar)
-                classifier = "sources"
-            }
-
-            artifact(tasks.named("javadocJar")) {
-                builtBy(tasks.named("javadocJar"))
-                classifier = "javadoc"
             }
 
             pom {
