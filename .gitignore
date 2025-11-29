@@ -1,4 +1,4 @@
-# User-specific stuff
++# User-specific stuff
 .idea/
 
 *.iml
@@ -117,3 +117,5 @@ runs/
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
+
+src/testmod/

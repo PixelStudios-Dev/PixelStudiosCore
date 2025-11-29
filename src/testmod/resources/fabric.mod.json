@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "pixelstudioscore",
+  "id": "testmod",
   "version": "${version}",
-  "name": "PixelStudiosCore",
+  "name": "TestMod",
   "description": "",
   "authors": [],
   "contact": {},
@@ -11,17 +11,17 @@
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
-      "io.pixelstudios.pixelstudioscore.impl.client.PixelstudioscoreDataGenerator"
+      "io.pixelstudios.testmod.client.TestModDataGenerator"
     ],
     "client": [
-      "io.pixelstudios.pixelstudioscore.impl.client.PixelstudioscoreClient"
+      "io.pixelstudios.testmod.client.TestModClient"
     ],
     "main": [
-      "io.pixelstudios.pixelstudioscore.impl.PixelStudiosCoreIntializer"
+      "io.pixelstudios.testmod.TestMod"
     ]
   },
   "mixins": [
-    "pixelstudioscore.mixins.json"
+    "testmod.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

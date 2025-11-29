@@ -1,3 +1,7 @@
+import org.gradle.internal.impldep.io.opencensus.metrics.LabelValue.create
+import org.gradle.kotlin.dsl.compileClasspath
+import org.gradle.kotlin.dsl.runtimeClasspath
+
 plugins {
     id("fabric-loom") version "1.13-SNAPSHOT"
     `maven-publish`
@@ -12,6 +16,48 @@ base {
     archivesName.set(project.property("archives_base_name") as String)
 }
 
+sourceSets {
+
+    val testmod by creating<SourceSet> {
+        java.srcDir("src/testmod/java")
+        resources.srcDir("src/testmod/resources")
+
+        val main = sourceSets.getByName("main")
+        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.runtimeClasspath
+    }
+
+}
+
+tasks.withType<Copy> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks {
+    named("compileTestmodJava") {
+        dependsOn("compileJava")
+    }
+
+    named("processTestmodResources") {
+        dependsOn("processResources")
+    }
+}
+
+loom {
+
+    runs {
+
+        register("testmodClient") {
+            client()
+            name("Testmod Client")
+            source(sourceSets["testmod"])
+        }
+
+    }
+
+}
+
+
 repositories {
     mavenCentral()
 }
@@ -22,7 +68,9 @@ dependencies {
     mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
-    
+
+    "testmodImplementation"(sourceSets["main"].output)
+
 }
 
 tasks.processResources {
