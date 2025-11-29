@@ -92,6 +92,7 @@ java {
         languageVersion.set(JavaLanguageVersion.of(21))
     }
     withSourcesJar()
+    withJavadocJar()
 }
 
 tasks.jar {
@@ -111,6 +112,11 @@ publishing {
             artifact(tasks.remapSourcesJar) {
                 builtBy(tasks.remapSourcesJar)
                 classifier = "sources"
+            }
+
+            artifact(tasks.named("javadocJar")) {
+                builtBy(tasks.named("javadocJar"))
+                classifier = "javadoc"
             }
 
             pom {
