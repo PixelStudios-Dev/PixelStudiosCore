@@ -1,4 +1,3 @@
-import org.gradle.internal.impldep.io.opencensus.metrics.LabelValue.create
 import org.gradle.kotlin.dsl.compileClasspath
 import org.gradle.kotlin.dsl.runtimeClasspath
 
@@ -17,16 +16,14 @@ base {
 }
 
 sourceSets {
-
     val testmod by creating<SourceSet> {
         java.srcDir("src/testmod/java")
         resources.srcDir("src/testmod/resources")
 
         val main = sourceSets.getByName("main")
-        compileClasspath += main.compileClasspath
-        runtimeClasspath += main.runtimeClasspath
+        compileClasspath += main.compileClasspath + main.output
+        runtimeClasspath += main.runtimeClasspath + main.output
     }
-
 }
 
 tasks.withType<Copy> {
@@ -44,33 +41,26 @@ tasks {
 }
 
 loom {
-
     runs {
-
         register("testmodClient") {
             client()
             name("Testmod Client")
             source(sourceSets["testmod"])
         }
-
     }
-
 }
-
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-
     minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
     mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
 
     "testmodImplementation"(sourceSets["main"].output)
-
 }
 
 tasks.processResources {
@@ -115,7 +105,14 @@ publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             artifactId = project.property("archives_base_name") as String
-            from(components["java"])
+
+            artifact(tasks.remapJar) {
+                builtBy(tasks.remapJar)
+            }
+            artifact(tasks.remapSourcesJar) {
+                builtBy(tasks.remapSourcesJar)
+                classifier = "sources"
+            }
 
             pom {
                 name.set(project.property("archives_base_name") as String)
