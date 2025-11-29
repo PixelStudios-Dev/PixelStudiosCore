@@ -101,17 +101,27 @@ tasks.jar {
     }
 }
 
+val devJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("")
+    from(sourceSets["main"].output)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    dependsOn("classes")
+
+    from("LICENSE") {
+        rename { "${it}_${base.archivesName.get()}" }
+    }
+}
+
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             artifactId = project.property("archives_base_name") as String
 
-            from(components["java"])
+            artifact(devJar.get())
 
-            artifacts.removeIf { it.classifier == null || it.classifier == "" }
-            artifact(tasks.remapJar) {
-                builtBy(tasks.remapJar)
-            }
+            artifact(tasks["sourcesJar"])
+            artifact(tasks["javadocJar"])
 
             pom {
                 name.set(project.property("archives_base_name") as String)
