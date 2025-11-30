@@ -37,11 +37,8 @@ tasks {
 }
 
 loom {
+
     mods {
-        register("pixelclub-backrooms") {
-            sourceSet(sourceSets["main"])
-            sourceSet(sourceSets["client"])
-        }
 
         register("testmod") {
             sourceSet(testmod)
@@ -54,6 +51,20 @@ loom {
             name("Testmod Client")
             source(sourceSets["testmod"])
         }
+
+        register("testmodDatagen") {
+            client()
+            name("Testmod Datagen")
+            source(sourceSets["testmod"])
+            runDir("run")
+
+            programArgs("--mod", "testmod", "--all", "--output", file("src/testmod/generated").absolutePath)
+
+            property("fabric-api.datagen")
+            property("fabric-api.datagen.output-dir", file("src/testmod/generated").absolutePath)
+            property("fabric-api.datagen.modid", "testmod")
+        }
+
     }
 }
 
@@ -63,6 +74,8 @@ fabricApi {
 
         modId = "testmod"
         client = true
+
+        createSourceSet = false
 
     }
 }

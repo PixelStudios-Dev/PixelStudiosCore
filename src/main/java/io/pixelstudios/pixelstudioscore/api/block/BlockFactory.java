@@ -3,6 +3,7 @@ package io.pixelstudios.pixelstudioscore.api.block;
 import io.pixelstudios.pixelstudioscore.impl.registry.ModBlockRegistry;
 import io.pixelstudios.pixelstudioscore.impl.registry.ModModelRegistry;
 import io.pixelstudios.pixelstudioscore.impl.registry.ModRegistry;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -33,6 +34,18 @@ public final class BlockFactory {
         this.block = block;
 
         this.defaultModel = true;
+
+    }
+
+    private BlockFactory(String id, AbstractBlock.Settings settings) {
+
+        this(id, new Block(settings));
+
+    }
+
+    private BlockFactory(String id) {
+
+        this(id, new Block(AbstractBlock.Settings.create()));
 
     }
 
