@@ -2,8 +2,8 @@ package io.pixelstudios.pixelstudioscore.impl;
 
 import net.fabricmc.api.ModInitializer;
 
-import static com.mojang.text2speech.Narrator.LOGGER;
 import static io.pixelstudios.pixelstudioscore.PixelStudiosCore.VERSION;
+import static io.pixelstudios.pixelstudioscore.PixelStudiosCore.LOGGER;
 
 public class PixelStudiosCoreIntializer implements ModInitializer {
 

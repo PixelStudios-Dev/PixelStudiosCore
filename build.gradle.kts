@@ -15,15 +15,11 @@ base {
     archivesName.set(project.property("archives_base_name") as String)
 }
 
-sourceSets {
-    val testmod by creating<SourceSet> {
-        java.srcDir("src/testmod/java")
-        resources.srcDir("src/testmod/resources")
-
-        val main = sourceSets.getByName("main")
-        compileClasspath += main.compileClasspath + main.output
-        runtimeClasspath += main.runtimeClasspath + main.output
-    }
+val testmod by sourceSets.creating {
+    java.srcDir("src/testmod/java")
+    resources.srcDir("src/testmod/resources")
+    compileClasspath += sourceSets["main"].compileClasspath
+    runtimeClasspath += sourceSets["main"].runtimeClasspath
 }
 
 tasks.withType<Copy> {
@@ -41,12 +37,33 @@ tasks {
 }
 
 loom {
+    mods {
+        register("pixelclub-backrooms") {
+            sourceSet(sourceSets["main"])
+            sourceSet(sourceSets["client"])
+        }
+
+        register("testmod") {
+            sourceSet(testmod)
+        }
+    }
+
     runs {
         register("testmodClient") {
             client()
             name("Testmod Client")
             source(sourceSets["testmod"])
         }
+    }
+}
+
+
+fabricApi {
+    configureDataGeneration {
+
+        modId = "testmod"
+        client = true
+
     }
 }
 
