@@ -96,7 +96,7 @@ public final class ModRegistry<T> {
         if (category == null)
             throw new IllegalStateException("Registry category must be set before registering " + path);
 
-        LOGGER.info("Registering {} as {}...", path, entry);
+        LOGGER.info("Registering {} as {}...", path, entry.getClass().getSimpleName());
 
         return Registry.register(category, Identifier.of(MOD_ID, path), entry);
 

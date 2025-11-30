@@ -10,9 +10,6 @@
   "icon": "assets/pixelstudioscore/icon.png",
   "environment": "*",
   "entrypoints": {
-    "fabric-datagen": [
-      "io.pixelstudios.pixelstudioscore.impl.client.PixelstudioscoreDataGenerator"
-    ],
     "client": [
       "io.pixelstudios.pixelstudioscore.impl.client.PixelstudioscoreClient"
     ],

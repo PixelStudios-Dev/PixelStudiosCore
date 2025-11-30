@@ -23,11 +23,9 @@ public final class BlockFactory {
     private final String id;
 
     private RegistryKey<ItemGroup> group;
-    private String translatedName;
+    private Map<String, String> translations;
 
     private boolean defaultModel;
-
-    private Map<String, String> translations;
 
     private BlockFactory(String id, Block block) {
 

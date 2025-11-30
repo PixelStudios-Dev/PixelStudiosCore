@@ -1,6 +1,6 @@
 package io.pixelstudios.testmod.client;
 
-import io.pixelstudios.pixelstudioscore.impl.client.PixelstudioscoreDataGenerator;
+import io.pixelstudios.pixelstudioscore.api.DataGen;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
@@ -10,7 +10,8 @@ public class TestModDataGenerator implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-        new PixelstudioscoreDataGenerator().onInitializeDataGenerator(fabricDataGenerator);
+        //new PixelstudioscoreDataGenerator().onInitializeDataGenerator(fabricDataGenerator);
+        DataGen.gen(pack);
 
     }
 }

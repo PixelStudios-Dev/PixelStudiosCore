@@ -9,6 +9,7 @@ public class TestMod implements ModInitializer {
     public void onInitialize() {
 
         PixelStudiosCore.initCore("testmod");
+        ModBlocks.test();
 
     }
 
