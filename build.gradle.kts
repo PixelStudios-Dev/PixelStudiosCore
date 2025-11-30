@@ -1,3 +1,6 @@
+import org.gradle.kotlin.dsl.compileClasspath
+import org.gradle.kotlin.dsl.runtimeClasspath
+
 plugins {
     id("fabric-loom") version "1.13-SNAPSHOT"
     `maven-publish`
@@ -13,11 +16,11 @@ base {
 }
 
 sourceSets {
-    val testmod by creating {
+    val testmod by creating<SourceSet> {
         java.srcDir("src/testmod/java")
         resources.srcDir("src/testmod/resources")
 
-        val main = sourceSets["main"]
+        val main = sourceSets.getByName("main")
         compileClasspath += main.compileClasspath + main.output
         runtimeClasspath += main.runtimeClasspath + main.output
     }
@@ -27,12 +30,14 @@ tasks.withType<Copy> {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
-tasks.named("compileTestmodJava") {
-    dependsOn("compileJava")
-}
+tasks {
+    named("compileTestmodJava") {
+        dependsOn("compileJava")
+    }
 
-tasks.named("processTestmodResources") {
-    dependsOn("processResources")
+    named("processTestmodResources") {
+        dependsOn("processResources")
+    }
 }
 
 loom {
@@ -43,7 +48,6 @@ loom {
             source(sourceSets["testmod"])
         }
     }
-
 }
 
 repositories {
@@ -55,6 +59,7 @@ dependencies {
     mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+
     "testmodImplementation"(sourceSets["main"].output)
 }
 
@@ -77,11 +82,15 @@ val targetJavaVersion = 21
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
-    options.release.set(targetJavaVersion)
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible) {
+        options.release.set(targetJavaVersion)
+    }
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
     withSourcesJar()
     withJavadocJar()
 }
@@ -96,6 +105,7 @@ val devJar by tasks.registering(Jar::class) {
     archiveClassifier.set("")
     from(sourceSets["main"].output)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     dependsOn("classes")
 
     from("LICENSE") {
@@ -109,8 +119,36 @@ publishing {
             artifactId = project.property("archives_base_name") as String
 
             artifact(devJar.get())
+
             artifact(tasks["sourcesJar"])
             artifact(tasks["javadocJar"])
+
+            pom {
+                name.set(project.property("archives_base_name") as String)
+                description.set("A Fabric library made by PixelStudios")
+                url.set("https://github.com/pixelstudios-dev/${project.property("archives_base_name")}")
+
+                licenses {
+                    license {
+                        name.set("MIT")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+
+                developers {
+                    developer {
+                        id.set("pixelstudios")
+                        name.set("PixelStudios Dev Team")
+                        url.set("https://github.com/pixelstudios-dev")
+                    }
+                }
+
+                scm {
+                    url.set("https://github.com/pixelstudios-dev/${project.property("archives_base_name")}")
+                    connection.set("scm:git:git://github.com/pixelstudios-dev/${project.property("archives_base_name")}.git")
+                    developerConnection.set("scm:git:ssh://github.com:pixelstudios-dev/${project.property("archives_base_name")}.git")
+                }
+            }
         }
     }
 }
@@ -123,6 +161,8 @@ signing {
     if (keyId != null && key != null && password != null) {
         useInMemoryPgpKeys(keyId, key, password)
         sign(publishing.publications["mavenJava"])
+    } else {
+        println("Firma PGP desactivada (faltan claves)")
     }
 }
 
