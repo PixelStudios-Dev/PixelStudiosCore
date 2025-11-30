@@ -34,7 +34,49 @@ Si usas cualquier otro build system, puedes encontrar su correspondiente snippet
 
 ## Usando la libreria
 
-Sección a realizar.
+La libreria pretende como objetivo principal dar una capa más de abstracción a los desarrolladores de mods.
+
+Esta permite hacer funciones complejas en unas cuantas lineas. Veamos un ejemplo:
+
+Para crear y registrar un bloque, usaremos la clase ``BlockFactory``, una clase que abstrae a ``BlockRegistry``
+
+```java
+ BlockFactory.create("test")
+             .setTranslatedName(Map.of(
+                     "es", "Bloque de prueba",
+                     "en", "Test block"
+             ))
+             .setBlockCategory(ItemGroups.COMBAT)
+             .build();
+```
+
+*Esto nos devuelve un objeto del tipo creado, en este caso, nuestro bloque registrado en la categoria de Combate.*
+
+Acto seguido, ejecutamos ``:runDatagen``y tendremos un bloque funcional con id "test", y su nombre traducido tanto a Español como Inglés.
+
+Esto se aplica a todo lo demás que implique trauducción o creación de modelos, esto es, **siempre que usemos registremos un objeto Factory, debemos generar los datagens**
+
+¿Y si quiero crear un item?
+
+Pues mas o menos menos igual, aplicando todo lo anterior podemos emplear:
+
+```java
+ItemFactory.create("test")
+             .setTranslatedName(Map.of(
+                     "es", "Bloque de prueba",
+                     "en", "Test block"
+             ))
+             .setBlockCategory(ItemGroups.COMBAT)
+             .build();
+```
+
+Como vemos, es exactamente igual solo que esta vez es un item en vez de un bloque.
+
+Refierase al codigo para ver los otros tipos de parametros que acepta ``#create``
+
+Por ahora esto es una pequeña introducción de como la libreria te facilita el desarrollo, en el futuro habrán más ejemplos y de mejor calidad.
+
+Gracias por leer.
 
 ## Licencia
 
