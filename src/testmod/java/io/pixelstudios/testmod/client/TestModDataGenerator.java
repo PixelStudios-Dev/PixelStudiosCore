@@ -8,10 +8,10 @@ public class TestModDataGenerator implements DataGeneratorEntrypoint {
 
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
+
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-        //new PixelstudioscoreDataGenerator().onInitializeDataGenerator(fabricDataGenerator);
-        DataGen.gen(pack);
+        DataGen.gen(pack, fabricDataGenerator);
 
     }
 }

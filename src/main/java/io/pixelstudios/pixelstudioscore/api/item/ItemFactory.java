@@ -1,8 +1,9 @@
 package io.pixelstudios.pixelstudioscore.api.item;
 
-import io.pixelstudios.pixelstudioscore.impl.registry.ModItemRegistry;
-import io.pixelstudios.pixelstudioscore.impl.registry.ModModelRegistry;
-import io.pixelstudios.pixelstudioscore.impl.registry.ModRegistry;
+import io.pixelstudios.pixelstudioscore.api.lang.LanguageManager.Languages;
+import io.pixelstudios.pixelstudioscore.impl.registry.CoreRegistry;
+import io.pixelstudios.pixelstudioscore.impl.registry.ItemRegistry;
+import io.pixelstudios.pixelstudioscore.impl.registry.ModelRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.registry.Registries;
@@ -21,12 +22,11 @@ public final class ItemFactory {
     private final String id;
 
     private RegistryKey<ItemGroup> group;
-    private String translatedName;
 
     private boolean defaultModel;
     private boolean isEgg;
 
-    private Map<String, String> translations;
+    private Map<Languages, String> translations;
 
     private ItemFactory(String id, Item item) {
 
@@ -38,11 +38,31 @@ public final class ItemFactory {
 
     }
 
+    private ItemFactory(String id, Item.Settings settings) {
+
+        this(id, new Item(settings));
+
+    }
+
+    private ItemFactory(String id) {
+
+        this(id, new Item(new Item.Settings()));
+
+    }
+
     public static ItemFactory create(String id, Item item) {
         return new ItemFactory(id, item);
     }
 
-    public ItemFactory addTranslatedName(Map<String, String> translations) {
+    public static ItemFactory create(String id, Item.Settings settings) {
+        return new ItemFactory(id, settings);
+    }
+
+    public static ItemFactory create(String id) {
+        return new ItemFactory(id);
+    }
+
+    public ItemFactory addTranslatedName(Map<Languages, String> translations) {
 
         this.translations = translations;
 
@@ -77,20 +97,20 @@ public final class ItemFactory {
 
     public Item build() {
 
-        ModItemRegistry<Item> itemRegistrySettings = ModItemRegistry.fromCustomSettings()
+        ItemRegistry<Item> itemRegistrySettings = ItemRegistry.fromCustomSettings()
                 .addTranslatedName(translations)
                 .inCreativeTab(group);
 
         if (defaultModel)
-            ModModelRegistry.getDefaultItemModelList().add(item);
+            ModelRegistry.getDefaultItemModelList().add(item);
 
         if (isEgg)
-            ModModelRegistry.getSpawnEggModelList().add(item);
+            ModelRegistry.getSpawnEggModelList().add(item);
 
         // - `ModRegistry` es un registrador universal
         // - Aplica tanto para Bloques, Items, Entidades, etc.
         // - Utilización de Patron Builder
-        return ModRegistry.of(id, item)
+        return CoreRegistry.of(id, item)
                 .withCategory(Registries.ITEM)
                 .applySettings(itemRegistrySettings)
                 .register();

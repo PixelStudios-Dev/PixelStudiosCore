@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 
 import java.util.HashSet;
 
-public class ModModelRegistry {
+public class ModelRegistry {
 
     private static final HashSet<Block> defaultBlockModelList = new HashSet<>();
 

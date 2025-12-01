@@ -43,8 +43,8 @@ Para crear y registrar un bloque, usaremos la clase ``BlockFactory``, una clase 
 ```java
  BlockFactory.create("test")
              .setTranslatedName(Map.of(
-                     "es", "Bloque de prueba",
-                     "en", "Test block"
+                     SPANISH, "Bloque de prueba",
+                     ENGLISH, "Test block"
              ))
              .setBlockCategory(ItemGroups.COMBAT)
              .build();
@@ -63,8 +63,8 @@ Pues mas o menos menos igual, aplicando todo lo anterior podemos emplear:
 ```java
 ItemFactory.create("test")
              .setTranslatedName(Map.of(
-                     "es", "Bloque de prueba",
-                     "en", "Test block"
+                     SPANISH, "Bloque de prueba",
+                     ENGLISH, "Test block"
              ))
              .setBlockCategory(ItemGroups.COMBAT)
              .build();
@@ -73,6 +73,10 @@ ItemFactory.create("test")
 Como vemos, es exactamente igual solo que esta vez es un item en vez de un bloque.
 
 Refierase al codigo para ver los otros tipos de parametros que acepta ``#create``
+
+*Anotación: SPANISH se corresponde a "es_es", ENGLISH a "en_us"*
+
+**Si no desea que el DataGen genere un modelo automáticamente deberá añadir ``#withoutDefaultModel``**
 
 Por ahora esto es una pequeña introducción de como la libreria te facilita el desarrollo, en el futuro habrán más ejemplos y de mejor calidad.
 

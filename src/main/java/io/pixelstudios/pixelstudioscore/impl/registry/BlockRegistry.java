@@ -1,6 +1,7 @@
 package io.pixelstudios.pixelstudioscore.impl.registry;
 
-import io.pixelstudios.pixelstudioscore.api.lang.ModLanguageManager;
+import io.pixelstudios.pixelstudioscore.api.lang.LanguageManager;
+import io.pixelstudios.pixelstudioscore.api.lang.LanguageManager.Languages;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -14,19 +15,19 @@ import java.util.Map;
 
 import static io.pixelstudios.pixelstudioscore.PixelStudiosCore.MOD_ID;
 
-public final class ModBlockRegistry<T extends Block> implements IRegistryAppliable<T> {
+public final class BlockRegistry<T extends Block> implements IRegistryAppliable<T> {
 
     private BlockItem blockItem;
 
     private RegistryKey<ItemGroup> group;
 
-    private Map<String, String> translations;
+    private Map<Languages, String> translations;
 
-    public static ModBlockRegistry<Block> fromCustomSettings() {
-        return new ModBlockRegistry<>();
+    public static BlockRegistry<Block> fromCustomSettings() {
+        return new BlockRegistry<>();
     }
 
-    public ModBlockRegistry<T> asBlockItem(BlockItem blockItem) {
+    public BlockRegistry<T> asBlockItem(BlockItem blockItem) {
 
         this.blockItem = blockItem;
 
@@ -34,7 +35,7 @@ public final class ModBlockRegistry<T extends Block> implements IRegistryAppliab
 
     }
 
-    public ModBlockRegistry<T> addTranslatedName(Map<String, String> translations) {
+    public BlockRegistry<T> addTranslatedName(Map<Languages, String> translations) {
 
         this.translations = translations;
 
@@ -42,7 +43,7 @@ public final class ModBlockRegistry<T extends Block> implements IRegistryAppliab
 
     }
 
-    public ModBlockRegistry<T> inCreativeTab(RegistryKey<ItemGroup> group) {
+    public BlockRegistry<T> inCreativeTab(RegistryKey<ItemGroup> group) {
 
         this.group = group;
 
@@ -51,13 +52,13 @@ public final class ModBlockRegistry<T extends Block> implements IRegistryAppliab
     }
 
     @Override
-    public void apply(ModRegistry<T> registry) {
+    public void apply(CoreRegistry<T> registry) {
 
         if (translations != null) {
 
             translations.forEach((k, v) -> {
 
-                ModLanguageManager.addTranslation("block", registry.path, v, k);
+                LanguageManager.addTranslation("block", registry.path, v, k);
 
             });
 

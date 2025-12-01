@@ -1,8 +1,8 @@
 package io.pixelstudios.pixelstudioscore.api.block;
 
-import io.pixelstudios.pixelstudioscore.impl.registry.ModBlockRegistry;
-import io.pixelstudios.pixelstudioscore.impl.registry.ModModelRegistry;
-import io.pixelstudios.pixelstudioscore.impl.registry.ModRegistry;
+import io.pixelstudios.pixelstudioscore.impl.registry.BlockRegistry;
+import io.pixelstudios.pixelstudioscore.impl.registry.ModelRegistry;
+import io.pixelstudios.pixelstudioscore.impl.registry.CoreRegistry;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -12,6 +12,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 
 import java.util.Map;
+
+import static io.pixelstudios.pixelstudioscore.api.lang.LanguageManager.*;
 
 /**
  *
@@ -24,7 +26,7 @@ public final class BlockFactory {
     private final String id;
 
     private RegistryKey<ItemGroup> group;
-    private Map<String, String> translations;
+    private Map<Languages, String> translations;
 
     private boolean defaultModel;
 
@@ -53,7 +55,15 @@ public final class BlockFactory {
         return new BlockFactory(id, block);
     }
 
-    public BlockFactory setTranslatedName(Map<String, String> translations) {
+    public static BlockFactory create(String id, AbstractBlock.Settings settings) {
+        return new BlockFactory(id, settings);
+    }
+
+    public static BlockFactory create(String id) {
+        return new BlockFactory(id);
+    }
+
+    public BlockFactory setTranslatedName(Map<Languages, String> translations) {
 
         this.translations = translations;
 
@@ -69,6 +79,15 @@ public final class BlockFactory {
 
     }
 
+    /**
+     *
+     * <p>Evita que el datagen genere automaticamente el modelo predeterminado de bloque.
+     *
+     * <p>Util para bloques personalizados.
+     *
+     * @return Este mismo objeto
+     *
+     */
     public BlockFactory withoutDefaultModel() {
 
         this.defaultModel = false;
@@ -79,15 +98,15 @@ public final class BlockFactory {
 
     public Block build() {
 
-        ModBlockRegistry<Block> blockRegistrySettings = ModBlockRegistry.fromCustomSettings()
+        BlockRegistry<Block> blockRegistrySettings = BlockRegistry.fromCustomSettings()
                 .asBlockItem(new BlockItem(block, new Item.Settings()))
                 .inCreativeTab(group)
                 .addTranslatedName(translations);
 
         if (defaultModel)
-            ModModelRegistry.getDefaultBlockModelList().add(block);
+            ModelRegistry.getDefaultBlockModelList().add(block);
 
-        return ModRegistry.of(id, block)
+        return CoreRegistry.of(id, block)
                 .withCategory(Registries.BLOCK)
                 .applySettings(blockRegistrySettings)
                 .register();

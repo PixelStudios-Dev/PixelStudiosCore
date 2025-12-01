@@ -1,21 +1,24 @@
 package io.pixelstudios.pixelstudioscore.api;
 
-import io.pixelstudios.pixelstudioscore.impl.datagen.ModEnglishLangProvider;
-import io.pixelstudios.pixelstudioscore.impl.datagen.ModModelProvider;
-import io.pixelstudios.pixelstudioscore.impl.datagen.ModSpanishLangProvider;
+import io.pixelstudios.pixelstudioscore.impl.datagen.LanguageProvider;
+import io.pixelstudios.pixelstudioscore.impl.datagen.ModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
-public class DataGen {
+public final class DataGen {
 
-    private DataGen() {
-    }
+    private DataGen() {}
 
-    public static void gen(FabricDataGenerator.Pack pack) {
+    public static void gen(FabricDataGenerator.Pack pack, FabricDataGenerator fabricDataGenerator) {
 
-        pack.addProvider(ModModelProvider::new);
-        pack.addProvider(ModSpanishLangProvider::new);
-        pack.addProvider(ModEnglishLangProvider::new);
+        pack.addProvider(ModelProvider::new);
 
+        pack.addProvider((output, registriesFuture) ->
+                new LanguageProvider(output, registriesFuture, "es_es")
+        );
+
+        pack.addProvider((output, registriesFuture) ->
+                new LanguageProvider(output, registriesFuture, "en_us")
+        );
 
     }
 

@@ -1,6 +1,7 @@
 package io.pixelstudios.pixelstudioscore.impl.registry;
 
-import io.pixelstudios.pixelstudioscore.api.lang.ModLanguageManager;
+import io.pixelstudios.pixelstudioscore.api.lang.LanguageManager;
+import io.pixelstudios.pixelstudioscore.api.lang.LanguageManager.Languages;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -8,19 +9,19 @@ import net.minecraft.registry.RegistryKey;
 
 import java.util.Map;
 
-public final class ModItemRegistry<T extends Item> implements IRegistryAppliable<T> {
+public final class ItemRegistry<T extends Item> implements IRegistryAppliable<T> {
 
     private RegistryKey<ItemGroup> group;
 
-    private Map<String, String> translations;
+    private Map<Languages, String> translations;
 
-    private ModItemRegistry() {}
+    private ItemRegistry() {}
 
-    public static ModItemRegistry<Item> fromCustomSettings() {
-        return new ModItemRegistry<>();
+    public static ItemRegistry<Item> fromCustomSettings() {
+        return new ItemRegistry<>();
     }
 
-    public ModItemRegistry<T> addTranslatedName(Map<String, String> translations) {
+    public ItemRegistry<T> addTranslatedName(Map<Languages, String> translations) {
 
         this.translations = translations;
 
@@ -28,7 +29,7 @@ public final class ModItemRegistry<T extends Item> implements IRegistryAppliable
 
     }
 
-    public ModItemRegistry<T> inCreativeTab(RegistryKey<ItemGroup> group) {
+    public ItemRegistry<T> inCreativeTab(RegistryKey<ItemGroup> group) {
 
         this.group = group;
 
@@ -37,13 +38,13 @@ public final class ModItemRegistry<T extends Item> implements IRegistryAppliable
     }
 
     @Override
-    public void apply(ModRegistry<T> registry) {
+    public void apply(CoreRegistry<T> registry) {
 
         if (translations != null) {
 
             translations.forEach((k, v) -> {
 
-                ModLanguageManager.addTranslation("block", registry.path, v, k);
+                LanguageManager.addTranslation("block", registry.path, v, k);
 
             });
 

@@ -23,14 +23,14 @@ import static io.pixelstudios.pixelstudioscore.PixelStudiosCore.LOGGER;
  * @param <T> Cualquier objeto admitido por el registro de minecraft
  *
  */
-public final class ModRegistry<T> {
+public final class CoreRegistry<T> {
 
     final String path;
     final T entry;
 
     private Registry<? super T> category;
 
-    private ModRegistry(String path, T entry) {
+    private CoreRegistry(String path, T entry) {
 
         this.path = path;
 
@@ -48,8 +48,8 @@ public final class ModRegistry<T> {
      * @return El objeto a registrar
      * @param <T> El tipo de objeto
      */
-    public static <T> ModRegistry<T> of(String path, T entry) {
-        return new ModRegistry<>(path, entry);
+    public static <T> CoreRegistry<T> of(String path, T entry) {
+        return new CoreRegistry<>(path, entry);
     }
 
     /**
@@ -59,7 +59,7 @@ public final class ModRegistry<T> {
      * @param registry La categoria dada por Registries
      * @return El objeto a registrar
      */
-    public ModRegistry<T> withCategory(Registry<? super T> registry) {
+    public CoreRegistry<T> withCategory(Registry<? super T> registry) {
 
         this.category = registry;
 
@@ -74,7 +74,7 @@ public final class ModRegistry<T> {
      * @param registryAppliable El registro aplicable Ej. ModBlockRegistry
      * @return El objeto a registrar
      */
-    public ModRegistry<T> applySettings(IRegistryAppliable<T> registryAppliable) {
+    public CoreRegistry<T> applySettings(IRegistryAppliable<T> registryAppliable) {
 
         if (this.category == null)
             throw new IllegalStateException("Category has not been set yet");
