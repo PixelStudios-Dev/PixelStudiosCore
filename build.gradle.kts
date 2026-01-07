@@ -89,6 +89,7 @@ dependencies {
     mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+    testImplementation("net.fabricmc:fabric-loader-junit:${project.property("loader_version")}")
 
     "testmodImplementation"(sourceSets["main"].output)
 }
@@ -115,6 +116,10 @@ tasks.withType<JavaCompile> {
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible) {
         options.release.set(targetJavaVersion)
     }
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 java {
