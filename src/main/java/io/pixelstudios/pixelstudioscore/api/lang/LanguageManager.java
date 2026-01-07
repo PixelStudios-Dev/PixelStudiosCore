@@ -36,4 +36,10 @@ public final class LanguageManager {
 
     }
 
+    public static void clear() {
+
+        translationMap.clear();
+
+    }
+
 }

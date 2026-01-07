@@ -25,4 +25,14 @@ public class ModelRegistry {
         return spawnEggModelList;
     }
 
+    public static void clear() {
+
+        defaultBlockModelList.clear();
+
+        defaultItemModelList.clear();
+
+        spawnEggModelList.clear();
+
+    }
+
 }
