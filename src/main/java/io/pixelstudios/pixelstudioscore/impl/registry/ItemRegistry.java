@@ -44,7 +44,7 @@ public final class ItemRegistry<T extends Item> implements IRegistryAppliable<T>
 
             translations.forEach((k, v) -> {
 
-                LanguageManager.addTranslation("block", registry.path, v, k);
+                LanguageManager.addTranslation("item", registry.path, v, k);
 
             });
 
