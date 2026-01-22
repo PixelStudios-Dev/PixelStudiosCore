@@ -16,6 +16,24 @@ public final class LanguageManager {
 
     }
 
+    public static void addTranslation(String category, String id, String translation, String langCode) {
+
+        translationMap.put(langCode + "#" + category + "." + MOD_ID + "." + id, translation);
+
+    }
+
+    public static void addRawTranslation(String fullKey, String translation, Languages language) {
+
+        translationMap.put(language.getLang() + "#" + fullKey, translation);
+
+    }
+
+    public static void addRawTranslation(String fullKey, String translation, String langCode) {
+
+        translationMap.put(langCode + "#" + fullKey, translation);
+
+    }
+
     public static HashMap<String, String> getTranslationMap() {
         return translationMap;
     }
